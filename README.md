@@ -1,6 +1,6 @@
 # 📡 Machine Learning for Telecommunications
 
-> **Context:** This repo is forked from the [AWS Solutions Library](https://github.com/aws-solutions-library-samples/machine-learning-for-telecommunications). I used it as a working reference during my tenure as Group PM at T-Mobile (2015–2022), where ML-driven network analytics informed capacity planning decisions at 100M+ subscriber scale.
+> **Context:** This repo is forked from the [AWS Solutions Library](https://github.com/aws-solutions-library-samples/machine-learning-for-telecommunications). I used it as a working reference during my tenure as Group PM at T-Mobile (2015 to 2022), where ML-driven network analytics informed capacity planning decisions at 100M+ subscriber scale.
 
 ## What This Does
 
@@ -13,7 +13,7 @@ An end-to-end ML framework on AWS SageMaker for telecom network data analysis. U
 
 ## How I Applied This at T-Mobile
 
-At T-Mobile, I led the technical program for network capacity planning for a 100M+ subscriber network. The core insight was that raw network traffic data — similar to what this framework ingests — could be combined with infrastructure efficiency metrics (Power Usage Effectiveness / PUE) to predict data center capacity requirements 2 years ahead of need.
+At T-Mobile, I led the technical program for network capacity planning for a 100M+ subscriber network. The core insight was that raw network traffic data (similar to what this framework ingests) could be combined with infrastructure efficiency metrics (Power Usage Effectiveness / PUE) to predict data center capacity requirements 2 years ahead of need.
 
 The ML pipeline I drove in production:
 
@@ -23,7 +23,7 @@ The ML pipeline I drove in production:
 4. **Output:** 2-year capacity forecast per data center region → fed directly into capital budget planning
 5. **Result:** $200M in capex savings by right-sizing data center buildout vs. prior rule-of-thumb planning
 
-This repo's SageMaker infrastructure — IPDR feature extraction, SageMaker notebook workflows, and the ETL architecture — is structurally similar to what we built internally. I've kept it as a reference for the patterns that translate from telecom data to production ML decisions.
+This repo's SageMaker infrastructure (IPDR feature extraction, SageMaker notebook workflows, and the ETL architecture) is structurally similar to what we built internally. I've kept it as a reference for the patterns that translate from telecom data to production ML decisions.
 
 ## Stack
 
