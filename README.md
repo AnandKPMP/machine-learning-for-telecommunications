@@ -1,51 +1,51 @@
-# AWS Machine Learning for All
-Machine Learning for All is a solution that helps data scientists in the industry get started using machine learning to generate insights from their data. The solution provides a framework for an end-to-end machine learning process including ad-hoc data exploration, data processing and feature engineering, and modeling training and evaluation.
+# 📡 Machine Learning for Telecommunications
 
-## AWS Machine Learning for Telecommunications
-Machine learning (ML) helps Amazon Web Services (AWS) customers use historical data to predict future outcomes, which can lead to better business decisions. 
+> **Context:** This repo is forked from the [AWS Solutions Library](https://github.com/aws-solutions-library-samples/machine-learning-for-telecommunications). I used it as a working reference during my tenure as Group PM at T-Mobile (2015–2022), where ML-driven network analytics informed capacity planning decisions at 100M+ subscriber scale.
 
-Machine learning techniques are core to the Communications Service Providers (CSPs) industry. CSPs can use ML algorithms to construct and refine mathematical models from their business data, and then use these models to help identify fraudulent use of network services, automate network functions (zero touch), and reduce customer churn. 
-AWS offers several machine learning services and tools tailored for a variety of use cases and levels of expertise, however it can be a challenge to understand the mechanics of model training and tuning, identify relevant data features, and design a workflow that can perform complex extraction, transformation, and loading (ETL) activities, and also scale to accommodate large datasets. 
-To help customers get started with a machine learning workflow for CSPs use cases, AWS offers the Machine Learning for telecom starter kit solution. This solution uses AWS CloudFormation to deploy a scalable, customizable machine learning architecture that leverages Amazon SageMaker, a fully managed machine learning service, and Jupyter Notebook, an open source web application for creating and sharing live code, equations, visualizations and narrative text. 
-The solution package provides a framework for an end-to-end machine learning process including ad-hoc data exploration, data processing and feature engineering, and model training and evaluation. It includes a sample telecom IP Data Record (IPDR) dataset to demonstrate how to use machine learning algorithms to test and train models for predictive analysis in telecom. Customers can use the included models as a starting point to develop their own custom machine learning models, and customize the included notebooks for their own use case.  
+## What This Does
 
-# Getting Started
-01. Prerequisites
+An end-to-end ML framework on AWS SageMaker for telecom network data analysis. Uses IP Data Records (IPDR) as the primary data source to demonstrate:
 
-The following procedures assumes that all of the OS-level configuration has been completed. They are:
+- Network traffic pattern analysis and anomaly detection
+- Churn prediction using subscriber behavioral features
+- Feature engineering pipelines for time-series network telemetry
+- Model training, evaluation, and deployment via SageMaker + Jupyter
 
-    AWS Command Line Interface
-    Python 3.6
-    
-The Machine Learning solution is developed with python notebook that runs on Sagemaker using pyspark and python as underlying execution code.    
+## How I Applied This at T-Mobile
 
-02. Build the machine learning solution
+At T-Mobile, I led the technical program for network capacity planning for a 100M+ subscriber network. The core insight was that raw network traffic data — similar to what this framework ingests — could be combined with infrastructure efficiency metrics (Power Usage Effectiveness / PUE) to predict data center capacity requirements 2 years ahead of need.
 
-Clone the machine-learning-for-all-solution from GitHub repository:
+The ML pipeline I drove in production:
 
-git clone https://github.com/awslabs/
+1. **Ingest:** Network traffic telemetry (IPDR-class records) across towers and regional PoPs
+2. **Feature engineering:** Subscriber growth curves, traffic per tower, peak-hour load patterns, seasonal adjustments
+3. **Model:** Time-series forecasting (traffic demand) + regression (PUE → cooling/power overhead)
+4. **Output:** 2-year capacity forecast per data center region → fed directly into capital budget planning
+5. **Result:** $200M in capex savings by right-sizing data center buildout vs. prior rule-of-thumb planning
 
-03. Build the Machine learning solution for deployment:
+This repo's SageMaker infrastructure — IPDR feature extraction, SageMaker notebook workflows, and the ETL architecture — is structurally similar to what we built internally. I've kept it as a reference for the patterns that translate from telecom data to production ML decisions.
 
+## Stack
+
+- AWS SageMaker (notebook instances + training jobs)
+- PySpark for large-scale ETL on IPDR datasets
+- Python 3 / scikit-learn / XGBoost
+- AWS CloudFormation for infrastructure deployment
+- Jupyter Notebooks for exploration and model evaluation
+
+## Running It
+
+See the original AWS deployment guide below. You'll need an AWS account, S3 bucket, and SageMaker access.
+
+```bash
+# Deploy the CloudFormation stack
 chmod +x build-s3-dist.sh
-./build-s3-dist.sh $DIST_OUTPUT_BUCKET $TEMPLATE_OUTPUT_BUCKET $VERSION 
+./build-s3-dist.sh $DIST_OUTPUT_BUCKET $TEMPLATE_OUTPUT_BUCKET $VERSION
 
-04. Upload deployment assets to your Amazon S3 bucket:
+aws s3 cp ./dist s3://$DIST_OUTPUT_BUCKET/machine-learning-for-all/latest \
+  --recursive --acl bucket-owner-full-control
+```
 
-aws s3 cp ./dist s3://$DIST_OUTPUT_BUCKET/machine-learning-for-all/latest --recursive --acl bucket-owner-full-control
+---
 
-05. Deploy the Machine-learning-for-all solution:
-
-    From your designated Amazon S3 bucket where you uploaded the deployment assets, copy the link location for the machine-learning-for-all.template.
-    Using AWS CloudFormation, launch the machine learning for all solution stack using the copied Amazon S3 link for the machine-learning-for-all.template.
-
-    Currently, the Machine Learning solution can be deployed in the following regions: [ us-east-1, us-east-2, us-west-2, eu-west-1, eu-central-1, ap-northeast-1, ap-northeast-2, ap-southeast-2 ]
-
-
-Copyright 2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
-
-Licensed under the Amazon Software License (the "License"). You may not use this file except in compliance with the License. A copy of the License is located at
-
-    http://aws.amazon.com/asl/
-
-or in the "license" file accompanying this file. This file is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, express or implied. See the License for the specific language governing permissions and limitations under the License.
+> Original solution by AWS Solutions Library. My additions: context, applied notes, and the capacity planning narrative above. All AWS license terms apply.
